@@ -1,35 +1,60 @@
-## i-can-not-speak
+# I Can Not Speak
 
-Windows 本地 SAPI 文本转语音演示，输出到虚拟麦克风（VB-CABLE 等），并提供 Flet 编写的图形界面。
+English | [简体中文](README_ZH_CN.md)
 
-### 主要功能
+## Overview
 
-- 列出系统中的输出设备，优先选择虚拟麦克风（VB-CABLE）。
-- 可选本地监听设备，方便同时听到播报。
-- 管理语速、音量与发音人。
-- 使用 Windows SAPI5 离线合成语音，无需联网。
+I Can Not Speak is a Windows-only text-to-speech assistant that uses the system SAPI 5 voices and streams audio through a virtual microphone. The UI is built with [Flet](https://flet.dev/) and targets users who need to play synthesized speech into voice chat or conferencing software.
 
-### 环境准备
+## Key Features
 
-项目使用 [uv](https://github.com/astral-sh/uv) 管理依赖：
+- Enumerates playback devices and selects a virtual microphone (tested with VB-Audio VB-CABLE).
+- Optional local monitor output so you can hear the audio while it streams to the virtual device.
+- Adjustable speech rate and volume with instant feedback.
+- Asynchronous speech queue powered by Windows SAPI for offline voice synthesis.
+
+## Requirements
+
+- **Operating system:** Windows 10 or later (SAPI 5 is required). The app does not run on macOS or Linux.
+- **Virtual microphone:** [VB-Audio VB-CABLE](https://vb-audio.com/Cable/) or another compatible virtual audio device. Install and enable it before launching the app.
+- **Python:** 3.12+ (managed via [uv](https://github.com/astral-sh/uv) in this project).
+
+## Initial Setup
+
+Install dependencies with uv (this creates the virtual environment on first run):
 
 ```powershell
 uv sync
 ```
 
-首次运行会创建虚拟环境并安装依赖（包含 `comtypes`、`sounddevice`、`flet` 等）。
+Make sure VB-CABLE is installed and that at least one SAPI voice is available in Windows Settings → Time & Language → Speech.
 
-### 运行图形界面
+## Running the App
+
+Launch the desktop UI with:
 
 ```powershell
 uv run i-can-not-speak
-# 或者
-uv run python -m i_can_not_speak
 ```
 
-请确保系统已安装 VB-CABLE（或其他虚拟麦克风）以及至少一个 SAPI 语音包。
+If you add new SAPI voices or audio devices while the app is open, use the refresh button inside the UI to reload the device list.
 
-### 常见问题
+## Packaging (Flet Build)
 
-- **未检测到语音包**：在 Windows 设置 → 时间和语言 → 语音 中安装中文或英文语音包。
-- **未找到输出设备**：确认 VB-CABLE 已安装并启用；必要时点击界面中的刷新按钮重新加载设备列表。
+The project follows the structure required by `flet build`. To produce a Windows bundle:
+
+```powershell
+flet build windows -v
+```
+
+Ensure Visual Studio Build Tools and the Flutter desktop prerequisites are installed, as described in the [Flet publishing guide](https://flet.dev/docs/publish/).
+
+## Troubleshooting
+
+- **No voices available:** install an additional SAPI voice in Windows settings.
+- **VB-CABLE missing:** install VB-CABLE and reboot if it does not show up in the device list.
+- **Audio clipping:** reduce the speech volume slider inside the app or lower the gain on the destination application.
+
+## License
+
+This project is distributed under the terms specified in the repository. External dependencies retain their respective licenses.
