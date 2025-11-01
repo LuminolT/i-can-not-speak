@@ -1,0 +1,39 @@
+[project]
+name = "i-can-not-speak"
+version = "0.1.0"
+description = "Windows SAPI text to speech demo with a Flet-based virtual microphone UI."
+readme = "README.md"
+requires-python = ">=3.12"
+dependencies = [
+    "comtypes>=1.4.5",
+    "flet[all]>=0.23.2",
+    "numpy>=1.26.0",
+    "pyinstaller>=6.16.0",
+    "pyttsx3>=2.99",
+    "sounddevice>=0.4.6",
+]
+
+[project.scripts]
+i-can-not-speak = "i_can_not_speak.app:run"
+
+[tool.flet]
+org = "dev.icanotspeak"
+product = "I Can Not Speak"
+company = "I Can Not Speak"
+copyright = "Copyright (C) 2025 by I Can Not Speak"
+
+[tool.flet.app]
+path = "src"
+
+[build-system]
+requires = ["hatchling"]
+build-backend = "hatchling.build"
+
+[tool.hatch.build.targets.wheel]
+packages = ["src/i_can_not_speak"]
+
+[tool.hatch.build.targets.sdist]
+include = ["src/i_can_not_speak", "README.md", "pyproject.toml", "src/main.py"]
+
+[tool.uv]
+managed = true
