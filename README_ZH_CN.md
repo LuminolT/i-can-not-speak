@@ -1,4 +1,4 @@
-# 我不能说话（I Can Not Speak）
+# 我不好说（I Can Not Speak）
 
 简体中文 | [English](README.md)
 
